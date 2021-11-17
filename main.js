@@ -64,6 +64,7 @@ function index() {
   q.appendChild(qText);
   container.appendChild(q);
   div = document.createElement("div");
+  div.id = "btnDiv";
 
   // The buttons the user clicks are created
   button1 = document.createElement("button");
@@ -154,10 +155,8 @@ function clear() {
 
 function finalScore() {
   // sets the highest value natures in an array
-  console.log("score: ", score);
   var largestValue = 0;
   for(var s in score) {
-    console.log("largestValue: ", largestValue);
     if(score[s] >= largestValue) {
       largestValue = score[s]; // Largest score value
     }
@@ -171,7 +170,6 @@ function finalScore() {
 
   // Chooses a random nature from the array
   chosenNature = finalNature[Math.floor(Math.random() * finalNature.length)];
-
   finalPokemon = [];
   // Gets all the Pokemon with the chosen nature
   for (var p in pokemon) {
@@ -182,12 +180,16 @@ function finalScore() {
   // Chooses a random pokemon from the array
   chosenPokemon = finalPokemon[Math.floor(Math.random() * finalPokemon.length)];
 
-  thankyou.push(personalities[0][chosenNature]);
+  // Line breaks for multi-line strings
+  let obtainedDescription = personalities[0][chosenNature].split('\n');
+  for (var i = 0; i < obtainedDescription.length; i++) {
+    thankyou.push(obtainedDescription[i]);
+  }
+  // thankyou.push(personalities[0][chosenNature]);
   thankyou.push(chosenPokemon + "!");
 }
 
 function finish() {
-  console.log("score:", score);
   container = document.getElementById("container");
   var buttonExists = document.getElementById("nextButton");
   // If the next button exists remove it
@@ -247,6 +249,9 @@ function finish() {
     q.appendChild(document.createElement("br"));
     q.appendChild(document.createElement("br"));
   }
+  var img = document.createElement("img");
+  img.setAttribute("src", "https://play.pokemonshowdown.com/sprites/dex/" + chosenPokemon.toLowerCase() + ".png");
+  container.appendChild(img);
   container.appendChild(button);
 
 }
